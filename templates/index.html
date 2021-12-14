@@ -1,0 +1,35 @@
+ {% extends "layout.html" %} {% block body %}
+
+<div class="info">
+    <div class="summerAle">
+        {% if session.user_id %}
+        <span style="font-size:28px">Hello, {{ session.username }}.</span>
+        <br>Welcome to Alphahops Brewery!<br> <a href="/logout">Log out</a>
+        <br>{% else %} <a href="/login">Log in</a> {% endif %}
+        <div class="beer_info">
+            <h1>Summer Ale</h1>
+            <h4>
+                Session IPA<br> 4.0% alc. | 25 IBU<br> R$ 20,00* (600ml bottle)<br>
+            </h4>
+
+            <h5>Make your reservation of our upcoming beer!</h5>
+
+            <form action="/order" method="post">
+
+                <input autocomplete="off" autofocus name="order" placeholder="quantity" type="number" min="1" required>
+
+                <input class="btn btn-primary" type="submit" style="font-weight: bold;" value="Order">
+            </form>
+        </div>
+        <br>
+        <div class="counter">
+            <h2 style="color: #003470; font-weigth: bold;"><span class="blink">{{ session.stock }}</span> beers left over, hurry up!</h2>
+
+        </div>
+        <h5 style="margin-right: 50px; margin-left: 50px; list-style-type:none; text-align:center; font-size:80%; color: #003470; font-style: italic; font-weight: bold">
+            *This is a pre-sale website with limited stock orders!
+            <br> Place your order now and we'll contact you as soon as the beer is perfect to drink! No costs in advance.
+        </h5>
+    </div>
+</div>
+{% endblock %}
