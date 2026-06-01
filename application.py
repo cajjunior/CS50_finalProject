@@ -1,4 +1,5 @@
 import re
+import os
 
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
@@ -11,8 +12,10 @@ def real(value):
 
 # run flask
 app = Flask(__name__)
-app.config["SESSION_PERMANET"] = False
+app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+# Use SECRET_KEY from environment in production
+app.secret_key = os.environ.get("SECRET_KEY", "dev_secret")
 Session(app)
 
 # Custom filter
