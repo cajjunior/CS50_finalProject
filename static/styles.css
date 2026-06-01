@@ -1,11 +1,11 @@
 .container {
     /*beer background set up*/
     text-align: center;
-    margin: 15px;
+    margin: 10px auto;
     background-image: url("https://img.freepik.com/vetores-gratis/fundo-de-cerveja-amplo_251819-1778.jpg?size=1280&ext=jpg");
     color: #000000;
     border-radius: 40px;
-    padding: 20px;
+    padding: 15px;
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -33,11 +33,12 @@
     /*yellow background for beer info, form and tables*/
     background: yellow;
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
-    padding: 30px;
+    padding: 20px;
     border-radius: 15px;
     margin-left: auto;
     margin-right: auto;
     max-width: 500px;
+    width: 100%;
     font-weight: bold;
 }
 
@@ -51,8 +52,55 @@
 body {
     /*font imported from google fonts*/
     font-family: 'Dosis', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+}
+
+/* Tabela responsiva: scroll horizontal em telas pequenas */
+.table-responsive-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 576px) {
+    .container {
+        margin: 5px;
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .info {
+        padding: 12px;
+    }
+
+    .summerAle {
+        padding: 10px;
+        margin: -12px;
+    }
+
+    .beer_info {
+        padding: 15px;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    nav .navbar-brand > img {
+        max-width: 100px;
+    }
+
+    h1 { font-size: 1.4rem; }
+    h4 { font-size: 1rem; }
+    h5 { font-size: 0.85rem; }
+
+    .table th, .table td {
+        font-size: 13px;
+        padding: 6px 8px;
+        white-space: nowrap;
+    }
 }
 
 p, h1, h4, h5 {
