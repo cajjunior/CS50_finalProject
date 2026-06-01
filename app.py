@@ -1,10 +1,13 @@
 import os
 import re
 
+import resend
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
+
+resend.api_key = os.environ.get("RESEND_API_KEY", "")
 
 def real(value):
     return f"R${value:,.2f}"
@@ -47,6 +50,26 @@ with app.app_context():
 
 BEER_PRICE = 25.0
 TOTAL_STOCK = 100
+NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")
+
+
+def send_order_notification(username, qty, total):
+    if not resend.api_key or not NOTIFY_EMAIL:
+        return
+    try:
+        resend.Emails.send({
+            "from": "Alphahops <onboarding@resend.dev>",
+            "to": NOTIFY_EMAIL,
+            "subject": f"Novo pedido recebido — {username}",
+            "html": f"""
+                <h2>Novo pedido na Alphahops!</h2>
+                <p><strong>Cliente:</strong> {username}</p>
+                <p><strong>Quantidade:</strong> {qty} unidades</p>
+                <p><strong>Total:</strong> R${total:,.2f}</p>
+            """,
+        })
+    except Exception:
+        pass
 
 
 def get_stock_used():
@@ -92,6 +115,8 @@ def order():
     new_order = Order(name=username, orders=int(order_qty), total=total, price=BEER_PRICE)
     db.session.add(new_order)
     db.session.commit()
+
+    send_order_notification(username, int(order_qty), total)
 
     return redirect("/orders")
 
