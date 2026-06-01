@@ -10,6 +10,7 @@ def real(value):
     return f"R${value:,.2f}"
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key")
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///alphahops.db")
@@ -102,7 +103,7 @@ def orders():
 
     username = session["username"]
     user_orders = Order.query.filter_by(name=username).order_by(Order.time.desc()).all()
-    orders_data = [{"name": o.name, "orders": o.orders, "total": o.total, "time": o.time} for o in user_orders]
+    orders_data = [{"name": o.name, "orders": o.orders, "total": o.total, "price": o.price, "beer_name": "Summer Ale", "time": o.time} for o in user_orders]
     return render_template("orders.html", orders=orders_data)
 
 
