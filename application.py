@@ -21,8 +21,12 @@ Session(app)
 # Custom filter
 app.jinja_env.filters["real"] = real
 
-# Define db
-db = SQL("sqlite:///alphahops.db")
+# Define db (use DATABASE_URL for production Postgres)
+db_url = os.environ.get("DATABASE_URL", "sqlite:///alphahops.db")
+# Some providers set postgres:// — convert to postgresql:// for drivers
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+db = SQL(db_url)
 
 
 @app.route("/")
