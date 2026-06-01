@@ -48,7 +48,7 @@ with app.app_context():
     db.create_all()
 
 
-BEER_PRICE = 25.0
+BEER_PRICE = 30.0
 TOTAL_STOCK = 100
 NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")
 
